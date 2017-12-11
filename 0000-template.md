@@ -1,20 +1,35 @@
-- Start Date: (fill me in with today's date, YYYY-MM-DD)
+- Start Date: 2017-12-11)
 - RFC PR: (leave this empty)
 - React Issue: (leave this empty)
 
 # Summary
 
-Brief explanation of the feature.
+Provide an isomorphic data fetching lifecycle 
+
+This RFC relates to RFC #8 (`componentDidServerRender`). However, that appears to be more concerned with side-effects and not props / data fetching.
 
 # Basic example
 
-If the proposal involves a new or changed API, include a basic code example.
-Omit this section if it's not applicable.
+```
+class Example extends React.Component {
+  getInitialProps(props, context) {
+    // must be a promise
+    return Api.getPostById(props.match.params.id).then(post => ({ post }))
+  }
+  
+  render() {
+    return <div>{this.props.post}</div>
+  }
+}
+```
 
 # Motivation
 
 Why are we doing this? What use cases does it support? What is the expected
 outcome?
+
+`getInitialProps` made popular by Next.js seems to be the ideal approach to server side data fetching. In Next.js's implementation, render is blocked on the client and server until the promise has resolved. 
+
 
 Please focus on explaining the motivation so that if this RFC is not accepted,
 the motivation could be used to develop alternative solutions. In other words,
@@ -29,21 +44,21 @@ implementation to implement. This should get into specifics and corner-cases,
 and include examples of how the feature is used. Any new terminology should be
 defined here.
 
+React should resolve `getInitialProps` prior to mounting the component. Since this avoids state entirely, it should not have the inconsistencies that usually occur when `setState` is used in componentWillMount.
+
 # Drawbacks
 
 Why should we *not* do this? Please consider:
 
-- implementation cost, both in term of code size and complexity
-- whether the proposed feature can be implemented in user space
-- the impact on teaching people React
-- integration of this feature with other existing and planned features
-- cost of migrating existing React applications (is it a breaking change?)
+There are a lot of alternatives in user land. 
 
 There are tradeoffs to choosing any path. Attempt to identify them here.
 
 # Alternatives
 
 What other designs have been considered? What is the impact of not doing this?
+
+Usually they are called `fetchComponentData` or `fetchData`. 
 
 # Adoption strategy
 
