@@ -28,21 +28,11 @@ class Example extends React.Component {
 Why are we doing this? What use cases does it support? What is the expected
 outcome?
 
-`getInitialProps` made popular by Next.js seems to be the ideal approach to server side data fetching. In Next.js's implementation, render is blocked on the client and server until the promise has resolved. 
+`getInitialProps` made popular by Next.js seems to be the ideal approach to server side data fetching. In Next.js's implementation, render is blocked on the client and server until the promise has resolved. This is contentious as some applications want to render _something_ while loading. Perhaps another API or component-API like `<ErrorBoundary>` could be used provide this kind of behavior
 
-
-Please focus on explaining the motivation so that if this RFC is not accepted,
-the motivation could be used to develop alternative solutions. In other words,
-enumerate the constraints you are trying to solve without coupling them too
-closely to the solution you have in mind.
 
 # Detailed design
 
-This is the bulk of the RFC. Explain the design in enough detail for somebody
-familiar with React to understand, and for somebody familiar with the
-implementation to implement. This should get into specifics and corner-cases,
-and include examples of how the feature is used. Any new terminology should be
-defined here.
 
 React should resolve `getInitialProps` prior to mounting the component. Since this avoids state entirely, it should not have the inconsistencies that usually occur when `setState` is used in componentWillMount.
 
@@ -52,11 +42,10 @@ Why should we *not* do this? Please consider:
 
 There are a lot of alternatives in user land. 
 
-There are tradeoffs to choosing any path. Attempt to identify them here.
+Todo
 
 # Alternatives
 
-What other designs have been considered? What is the impact of not doing this?
 
 Usually they are called `fetchComponentData` or `fetchData`. 
 
@@ -66,7 +55,11 @@ If we implement this proposal, how will existing React developers adopt it? Is
 this a breaking change? Can we write a codemod? Should we coordinate with
 other projects or libraries?
 
+Todo
+
 # How we teach this
+
+Todo
 
 What names and terminology work best for these concepts and why? How is this
 idea best presented? As a continuation of existing React patterns?
